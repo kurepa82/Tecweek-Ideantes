@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tu gafete · TECweek Ideantes</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--s:.33}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:#12063A;color:#fff;font-family:Montserrat,sans-serif}
+[hidden]{display:none!important}
+.app{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;align-items:flex-start;padding:24px 16px}
+.panel{width:100%;max-width:380px;display:flex;flex-direction:column;gap:8px}
+h1{margin:0;font-size:28px;font-weight:800}
+.panel p{margin:0 0 8px;color:#D9CCFF;font-size:15px;line-height:1.4}
+fieldset{border:0;margin:0 0 4px;padding:0;display:flex;gap:10px}
+legend{padding:0;margin-bottom:6px;font-weight:600;font-size:14px;color:#FFD60A}
+fieldset label{flex:1;margin:0;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border:2px solid #8B5CF6;border-radius:12px;background:#1F0B47;font-weight:600;cursor:pointer}
+fieldset label:has(input:checked){background:#FFD60A;color:#060638;border-color:#FFD60A}
+.panel>label{font-weight:600;font-size:14px;color:#FFD60A;margin-top:6px}
+input[type=text],select{min-height:48px;box-sizing:border-box;width:100%;padding:0 14px;border-radius:12px;border:2px solid #8B5CF6;background:#1F0B47;color:#fff;font:500 16px Montserrat,sans-serif}
+input[type=file]{color:#D9CCFF;font:500 14px Montserrat,sans-serif;min-height:48px}
+button{min-height:52px;margin-top:12px;border:0;border-radius:999px;background:#D900FF;color:#fff;font:800 17px Montserrat,sans-serif;cursor:pointer}
+#msg{min-height:20px;font-size:14px;color:#67E8F9}
+.wrap{position:relative;flex:none;width:calc(1080px*var(--s));height:calc(1620px*var(--s));overflow:hidden;border-radius:12px}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1620px;transform:scale(var(--s));transform-origin:0 0;overflow:hidden;background:#12063A;font-family:Montserrat,sans-serif;color:#fff}
+#stage .a{position:absolute}
+#bg{inset:-40px;filter:blur(6px);background:
+radial-gradient(circle at 15% 12%,rgba(217,0,255,.30),transparent 38%),
+radial-gradient(circle at 88% 30%,rgba(103,232,249,.17),transparent 34%),
+radial-gradient(circle at 20% 78%,rgba(103,232,249,.15),transparent 36%),
+radial-gradient(circle at 85% 90%,rgba(217,0,255,.27),transparent 40%),
+radial-gradient(circle at 70% 8%,rgba(103,232,249,.40),transparent 40px),
+radial-gradient(circle at 8% 45%,rgba(217,0,255,.45),transparent 50px),
+radial-gradient(circle at 94% 62%,rgba(103,232,249,.38),transparent 45px),
+radial-gradient(circle at 12% 92%,rgba(255,214,10,.25),transparent 45px),#12063A}
+.chip{width:108px;height:88px;box-sizing:border-box;border:2px solid #D900FF;border-radius:14px;background:#0B0B4F;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;top:925px}
+.chip b{font-weight:800;font-size:24px}.chip span{font-weight:600;font-size:20px;color:#FFD60A}
+.foot{display:flex;flex-wrap:wrap;gap:16px 24px;justify-content:center;align-items:center;margin:8px 16px 0;padding:28px 0 40px;border-top:1px solid rgba(139,92,246,.45)}
+.foot .who{font-size:15px;line-height:1.4;color:#D9CCFF}.foot .who b{color:#FFD60A;font-weight:800}
+.foot a.btn{min-height:48px;display:inline-flex;align-items:center;padding:0 26px;border-radius:999px;background:#FFD60A;color:#060638;font-weight:800;font-size:16px;text-decoration:none}
+</style>
+</head>
+<body>
+<main class="app">
+<section class="panel">
+<h1>Armá tu gafete</h1>
+<p>Completá tus datos, subí tu foto y descargá tu credencial de TECweek Ideantes para compartirla.</p>
+<fieldset><legend>Participo como</legend>
+<label><input type="radio" name="m" value="asistente" checked> Asistente</label>
+<label><input type="radio" name="m" value="speaker"> Speaker</label></fieldset>
+<label for="name">Nombre</label><input type="text" id="name" maxlength="30" placeholder="Tu nombre" autocomplete="name">
+<label for="country">País</label><input type="text" id="country" maxlength="24" placeholder="Argentina">
+<label for="job" id="joblabel">A qué te dedicás</label><input type="text" id="job" maxlength="32" placeholder="Tu profesión o proyecto">
+<div id="talkrow" hidden style="display:flex;flex-direction:column;gap:8px"><label for="talk" style="font-weight:600;font-size:14px;color:#FFD60A;margin-top:6px">Tu charla</label><select id="talk"></select></div>
+<label for="photo">Tu foto</label><input type="file" id="photo" accept="image/*">
+<div id="adj" hidden style="display:flex;flex-direction:column;gap:6px"><label for="zoom" style="font-weight:600;font-size:14px;color:#FFD60A;margin-top:6px">Zoom de la foto</label><input type="range" id="zoom" min="100" max="300" value="100"><label for="posx" style="font-weight:600;font-size:14px;color:#FFD60A">Mover a los lados</label><input type="range" id="posx" min="0" max="100" value="50"><label for="posy" style="font-weight:600;font-size:14px;color:#FFD60A">Mover arriba y abajo</label><input type="range" id="posy" min="0" max="100" value="25"></div>
+<button id="dl" type="button">Descargar mi gafete</button>
+<p id="msg" role="status"></p>
+</section>
+
+<div class="wrap" id="wrap"><div id="stage">
+<div class="a" id="bg"></div>
+<div class="a" style="left:0;top:0;width:1080px;height:1620px;transform:rotate(-2deg);transform-origin:540px 0">
+<div class="a" style="left:480px;top:-80px;width:120px;height:330px;box-sizing:border-box;background:#FFD60A;border-left:3px solid rgba(6,6,56,.25);border-right:3px solid rgba(6,6,56,.25);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.45)"><span style="display:block;transform:rotate(90deg);white-space:nowrap;font-weight:800;font-size:22px;letter-spacing:5px;color:#060638">CLUB ORATORIA · TECWEEK IDEANTES · CLUB ORATORIA · TECWEEK</span></div>
+<div class="a" style="left:486px;top:240px;width:108px;height:74px;border-radius:12px;background:linear-gradient(180deg,#F4F4FA,#A9A9BD 55%,#E6E6F0);box-shadow:0 8px 18px rgba(0,0,0,.5)"><div class="a" style="left:34px;top:30px;width:40px;height:12px;border-radius:6px;background:#6B6B80"></div></div>
+<div class="a" style="left:512px;top:300px;width:56px;height:70px;box-sizing:border-box;border:9px solid #C4C4D6;border-radius:20px;box-shadow:0 6px 12px rgba(0,0,0,.45)"></div>
+
+<div class="a" style="left:190px;top:330px;width:700px;height:1260px;box-sizing:border-box;border:3px solid #D900FF;border-radius:36px;background:#060638;box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 60px rgba(217,0,255,.28);overflow:hidden">
+<div class="a" style="left:275px;top:26px;width:150px;height:26px;box-sizing:border-box;border-radius:13px;background:#12063A;border-top:3px solid #000"></div>
+<svg class="a" style="left:56px;top:82px;width:93px;height:62px" viewBox="250 510 1460 980" role="img" aria-label="Club Oratoria"><path d="M1028 811A347 347 0 1 0 1028 1189" fill="none" stroke="#FFFFFF" stroke-width="230"/><circle cx="1332" cy="1000" r="269" fill="none" stroke="#FFFFFF" stroke-width="164"/><circle cx="1332" cy="1000" r="110" fill="#C90BD4"/></svg>
+<div class="a" style="left:168px;top:98px;font-weight:600;font-size:26px;color:#FFD60A">Club Oratoria presenta:</div>
+<div class="a" style="left:0;top:170px;width:694px;text-align:center;font-weight:800;font-size:124px;line-height:1;letter-spacing:-3px;color:#D900FF">Ideantes</div>
+<div class="a" style="left:0;top:300px;width:694px;text-align:center;font-size:66px;line-height:1;letter-spacing:3px"><span style="font-weight:800">TEC</span><span style="font-weight:300">WEEK</span></div>
+<div class="a" style="left:77px;top:392px;width:540px;text-align:center;font-weight:500;font-size:22px;line-height:1.35;color:#D9CCFF">Cuando la tecnología es la <b style="font-weight:800;color:#fff">voz</b>, lo irremplazable es <b style="font-weight:800;color:#fff">quién habla</b>.</div>
+<div class="a" id="wave" style="left:119px;top:508px;width:456px;height:114px"></div>
+<div class="a" style="left:262px;top:480px;width:170px;height:170px;border-radius:50%;background:#D900FF"></div><div class="a" id="photoEl" style="left:268px;top:486px;width:158px;height:158px;border-radius:50%;background-color:#0B0B4F;background-repeat:no-repeat;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:20px;letter-spacing:2px;color:#D9CCFF"><span id="ph">TU FOTO</span></div>
+<div class="a" id="nameEl" style="left:0;top:676px;width:694px;text-align:center;font-weight:800;font-size:54px;line-height:1.1;white-space:nowrap">TU NOMBRE</div>
+<div class="a" id="subEl" style="left:0;top:748px;width:694px;text-align:center;font-weight:500;font-size:24px;color:#D9CCFF;white-space:nowrap">[Tu país] · [A qué te dedicás]</div>
+<div class="a" style="left:0;top:808px;width:694px;display:flex;justify-content:center"><div id="pill" style="padding:12px 30px;border-radius:999px;background:#FFD60A;color:#060638;font-weight:800;font-size:22px;letter-spacing:2px">ASISTENTE · 5 CHARLAS</div></div>
+<div class="a" id="seclabel" style="left:50px;top:884px;font-weight:600;font-size:18px;letter-spacing:4px;color:#FFD60A">MI SEMANA</div>
+<div id="chips">
+<div class="a chip" style="left:50px"><b>MAR</b><span>19 h</span></div>
+<div class="a chip" style="left:173px"><b>MIÉ</b><span>19 h</span></div>
+<div class="a chip" style="left:296px"><b>JUE</b><span>19 h</span></div>
+<div class="a chip" style="left:419px"><b>VIE</b><span>16 h</span></div>
+<div class="a chip" style="left:542px"><b>VIE</b><span>21 h</span></div>
+</div>
+<div class="a" id="talkbox" hidden style="left:50px;top:925px;width:594px;height:96px;box-sizing:border-box;border:2px solid #D900FF;border-radius:14px;background:#0B0B4F;padding:0 22px;display:flex;flex-direction:column;justify-content:center;gap:4px"><div id="tkDay" style="font-weight:800;font-size:22px;color:#FFD60A"></div><div id="tkTitle" style="font-weight:800;font-size:22px;line-height:1.25"></div></div>
+<div class="a" style="left:50px;top:1034px;font-weight:500;font-size:16px;color:#D9CCFF">Horario de Argentina. Ecuador: 2 h menos.</div>
+<div class="a" style="left:56px;top:1076px;width:582px;height:12px;border-radius:6px;background:linear-gradient(90deg,#67E8F9,#D900FF,#FFD60A,#67E8F9)"></div>
+<div class="a" id="bars" style="left:56px;top:1108px;width:330px;height:70px"></div>
+<div class="a" id="idEl" style="left:56px;top:1190px;font-weight:500;font-size:16px;letter-spacing:2px;color:#D9CCFF">TW-AS-2026-0001</div>
+<div class="a" style="left:420px;top:1108px;width:218px;font-weight:500;font-size:18px;line-height:1.35">Transmisión en vivo por Google Meet<br><b style="font-weight:800;color:#FFD60A">@club_oratoria</b></div>
+<div class="a" style="left:0;top:0;width:694px;height:1254px;background:linear-gradient(115deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 34%,rgba(255,255,255,0) 66%,rgba(255,255,255,.06) 100%)"></div>
+</div></div></div></div>
+</main>
+<footer class="foot">
+<svg width="72" height="48" viewBox="250 510 1460 980" role="img" aria-label="Club Oratoria"><path d="M1028 811A347 347 0 1 0 1028 1189" fill="none" stroke="#FFFFFF" stroke-width="230"/><circle cx="1332" cy="1000" r="269" fill="none" stroke="#FFFFFF" stroke-width="164"/><circle cx="1332" cy="1000" r="110" fill="#C90BD4"/></svg>
+<div class="who"><b>Club Oratoria</b><br>@club_oratoria</div>
+<a class="btn" id="formlink" href="https://forms.gle/eiB7dAhLaC6n3EU68" target="_blank" rel="noopener">Inscribite a TECweek Ideantes</a>
+</footer>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var TALKS=[["Martes","19 h ARG · 17 h ECU","¿Quién habla cuando habla la IA?"],["Miércoles","19 h ARG · 17 h ECU","Más allá de la imagen: el poder de la presencia en la era digital"],["Jueves","19 h ARG · 17 h ECU","Conectadas, no vulnerables: juntas contra la violencia digital"],["Viernes","16 h ARG · 14 h ECU","Human futures LAB"],["Viernes","21 h ARG · 19 h ECU","Comunicación para conectar"]];
+var sel=$("talk");TALKS.forEach(function(t,i){var o=document.createElement("option");o.value=i;o.textContent=t[0]+" · "+t[1].split(" · ")[0]+" · "+t[2];sel.appendChild(o)});
+var w="";for(var i=0;i<40;i++){var h=14+110*Math.abs(Math.sin(i*.37))*(.55+.45*Math.sin(i*.11+1));h=Math.max(14,Math.min(h,130));w+='<rect x="'+(i*15+2)+'" y="'+(75-h/2).toFixed(1)+'" width="8" height="'+h.toFixed(1)+'" rx="4" fill="url(#wg)"/>'}
+$("wave").innerHTML='<svg width="456" height="114" viewBox="0 0 600 150" aria-hidden="true"><defs><linearGradient id="wg" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#67E8F9"/><stop offset="1" stop-color="#D900FF"/></linearGradient></defs>'+w+'</svg>';
+var b="",x=0,seed=7,W=[3,3,4,6,8],G=[3,4,5];function r(){seed=(seed*9301+49297)%233280;return seed/233280}
+while(x<326){var bw=W[Math.floor(r()*5)],g=G[Math.floor(r()*3)];b+='<rect x="'+x+'" y="0" width="'+bw+'" height="70" fill="#F3EEFF"/>';x+=bw+g}
+$("bars").innerHTML='<svg width="330" height="70" viewBox="0 0 330 70" aria-hidden="true">'+b+'</svg>';
+function mode(){return document.querySelector('input[name=m]:checked').value}
+function render(){
+ var sp=mode()==="speaker",n=$("name").value.trim(),c=$("country").value.trim(),j=$("job").value.trim();
+ var ne=$("nameEl");ne.textContent=(n||"Tu nombre").toUpperCase();ne.style.fontSize=(n.length>22?34:n.length>16?42:54)+"px";
+ var parts=[c||"[Tu país]",j||(sp?"[Tu organización]":"[A qué te dedicás]")];$("subEl").textContent=parts.join(" · ");
+ var p=$("pill");p.textContent=sp?"SPEAKER":"ASISTENTE · 5 CHARLAS";p.style.background=sp?"#D900FF":"#FFD60A";p.style.color=sp?"#FFFFFF":"#060638";
+ $("joblabel").textContent=sp?"Organización o marca":"A qué te dedicás";$("job").placeholder=sp?"Tu organización o marca":"Tu profesión o proyecto";
+ $("talkrow").hidden=!sp;$("chips").hidden=sp;$("talkbox").hidden=!sp;$("seclabel").textContent=sp?"MI CHARLA":"MI SEMANA";
+ var t=TALKS[sel.value||0];$("tkDay").textContent=t[0]+" · "+t[1];$("tkTitle").textContent=t[2];
+ var hsh=0,s=(n+c).toLowerCase();for(var k=0;k<s.length;k++)hsh=(hsh*31+s.charCodeAt(k))%9000;
+ $("idEl").textContent="TW-"+(sp?"SP":"AS")+"-2026-"+String(1000+hsh).slice(-4);
+}
+["name","country","job"].forEach(function(i){$(i).addEventListener("input",render)});
+sel.addEventListener("change",render);
+document.querySelectorAll("input[name=m]").forEach(function(e){e.addEventListener("change",render)});
+var IMG=null;
+function place(){if(!IMG)return;var z=$("zoom").value/100,px=$("posx").value/100,py=$("posy").value/100,D=158,sc=Math.max(D/IMG.w,D/IMG.h)*z,w=IMG.w*sc,h=IMG.h*sc,e=$("photoEl").style;e.backgroundSize=w.toFixed(1)+"px "+h.toFixed(1)+"px";e.backgroundPosition=((D-w)*px).toFixed(1)+"px "+((D-h)*py).toFixed(1)+"px"}
+$("photo").addEventListener("change",function(){var f=this.files&&this.files[0];if(!f)return;var fr=new FileReader();fr.onload=function(){var im=new Image();im.onload=function(){IMG={w:im.naturalWidth,h:im.naturalHeight};$("photoEl").style.backgroundImage='url("'+fr.result+'")';$("ph").hidden=true;$("adj").hidden=false;$("zoom").value=100;$("posx").value=50;$("posy").value=25;place()};im.src=fr.result};fr.readAsDataURL(f)});
+["zoom","posx","posy"].forEach(function(i){$(i).addEventListener("input",place)});
+function fit(){var s=Math.min(.6,(window.innerWidth-32)/1080);document.documentElement.style.setProperty("--s",s)}
+window.addEventListener("resize",fit);fit();render();
+var fl=$("formlink");if(!/^https?:/.test(fl.getAttribute("href")))fl.hidden=true;
+function saveBlob(bl){var u=URL.createObjectURL(bl),a=document.createElement("a");a.href=u;a.download="gafete-tecweek-ideantes.png";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000)}
+$("dl").addEventListener("click",function(){
+ $("msg").textContent="Preparando tu gafete…";
+ (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){
+  return html2canvas($("stage"),{backgroundColor:"#12063A",scale:2,width:1080,height:1620,scrollX:0,scrollY:0,onclone:function(d){var wr=d.getElementById("wrap");wr.style.width="1080px";wr.style.height="1620px";wr.style.overflow="visible";d.getElementById("stage").style.transform="none"}});
+ }).then(function(cv){return new Promise(function(res){cv.toBlob(res,"image/png")})}).then(function(bl){
+  if(!bl)throw new Error("blob");saveBlob(bl);$("msg").textContent="¡Listo! Tu gafete se descargó. Si no lo ves, revisá la carpeta de descargas.";
+ }).catch(function(){$("msg").textContent="No pude generar la imagen. Probá con una captura de pantalla."});
+});
+})();
+</script>
+</body>
+</html>
